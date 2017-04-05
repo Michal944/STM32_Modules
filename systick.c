@@ -15,6 +15,12 @@
 #define GPpp 	  0b0000
 #define OutPut10  0b0001
 
+#define My_SysTick_CLKSource_HCLK_Div8    ((uint32_t)0xFFFFFFFB)
+#define My_SysTick_CLKSource_HCLK         ((uint32_t)0x00000004)
+
+#define Clock_Frequency 		72000000
+#define Clock_Frequency_Div8	 9000000
+
 void RCC_Config()
 {
 	RCC->APB2ENR = PA;
@@ -47,8 +53,8 @@ int main(void)
  RCC_Config();
  PIN_Config(0);
 
- SysTick_Config(15000000);
- SysTick_CLKSourceConfig(SysTick_CLKSource_HCLK_Div8);
+ SysTick_Config(Clock_Frequency_Div8/2);
+ SysTick->CTRL &= My_SysTick_CLKSource_HCLK_Div8;
 
  while (1) {
 
